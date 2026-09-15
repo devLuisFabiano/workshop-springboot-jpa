@@ -35,11 +35,23 @@ public class TestConfig implements CommandLineRunner {
         Category cat2 = new Category(null, "Books", null);
         Category cat3 = new Category(null, "Computers", null);
 
-        Product p1 = new Product(null, "Blue Lock", "lorem ipsum dolor sit amet, consectetur.", 90.5, "", null);
-        Product p2 = new Product(null, "Smart TV", "lorem ipsum dolor sit amet, consectetur.", 2190.0, "", null);
-        Product p3 = new Product(null, "Macbook Pro", "lorem ipsum dolor sit amet, consectetur.", 1250.0, "", null);
-        Product p4 = new Product(null, "PC Gamer", "lorem ipsum dolor sit amet, consectetur.", 1200.0, "", null);
-        Product p5 = new Product(null, "Rails for Dummies", "lorem ipsum dolor sit amet, consectetur.", 100.99, "", null);
+        Product p1 = new Product(null, "Blue Lock", "lorem ipsum dolor sit amet, consectetur.", 90.5, "");
+        Product p2 = new Product(null, "Smart TV", "lorem ipsum dolor sit amet, consectetur.", 2190.0, "");
+        Product p3 = new Product(null, "Macbook Pro", "lorem ipsum dolor sit amet, consectetur.", 1250.0, "");
+        Product p4 = new Product(null, "PC Gamer", "lorem ipsum dolor sit amet, consectetur.", 1200.0, "");
+        Product p5 = new Product(null, "Rails for Dummies", "lorem ipsum dolor sit amet, consectetur.", 100.99, "");
+
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+        productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
+        p1.getCategories().add(cat2);
+        p2.getCategories().add(cat1);
+        p2.getCategories().add(cat3);
+        p3.getCategories().add(cat3);
+        p4.getCategories().add(cat3);
+        p5.getCategories().add(cat2);
+
+        productRepository.saveAll(Arrays.asList(p1, p2, p3, p4 ,p5));
 
         User u1 = new User(null, "Luis Fabiano", "luis@gmail.com", "988888888", "123456", null);
         User u2 = new User(null, "Rogers Garcia", "rogers@gmail.com", "977777777", "123456", null);
@@ -48,8 +60,6 @@ public class TestConfig implements CommandLineRunner {
         Order o2 = new Order(null, Instant.parse("2026-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2);
         Order o3 = new Order(null, Instant.parse("2026-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT, u1);
 
-        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
-        productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
         userRepository.saveAll(Arrays.asList(u1,u2));
         orderRepository.saveAll(Arrays.asList(o1,o2,o3));
     }
